@@ -5,6 +5,10 @@ function! s:Node.init() abort
   " You may override this function
 endfunction
 
+function! s:Node.schedule_update() abort
+  call bellforest#Scheduler#instance().schedule(self)
+endfunction
+
 function! s:Node.visit() abort
   call self.draw()
   for l:child in self.childs
