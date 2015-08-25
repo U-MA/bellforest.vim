@@ -45,7 +45,7 @@ function! s:Director.run_with_scene(scene) abort
     call a:scene.visit()
 
     redraw
-    sleep 16m
+    execute 'sleep ' float2nr(s:fps2msec(self.fps)) 'm'
   endwhile
 
   bdelete!
@@ -63,3 +63,8 @@ endfunction
 function! bellforest#Director#instance() abort
   return s:Director
 endfunction
+
+function! s:fps2msec(fps) abort
+  return (1.0 / a:fps) * 1000
+endfunction
+
