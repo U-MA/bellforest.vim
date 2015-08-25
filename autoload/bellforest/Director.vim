@@ -46,7 +46,7 @@ function! s:Director.run_with_scene(scene) abort
   bdelete!
 endfunction
 
-function! s:Director.app_end() abort
+function! s:Director.end() abort
   let self.is_end = 1
 endfunction
 
