@@ -25,6 +25,8 @@ endfunction
 function! s:Director.run_with_scene(scene) abort
   execute 'tabnew' a:scene.name
 
+  let self.is_end = 0
+
   call a:scene.init()
   call a:scene.child_init()
 
