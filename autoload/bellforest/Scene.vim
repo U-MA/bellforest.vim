@@ -41,6 +41,10 @@ function! s:Scene.absolute_position() abort
   return [ 1, 1 ]
 endfunction
 
+function! s:Scene.get_event_dispatcher() abort
+  return bellforest#Director#instance().get_event_dispatcher()
+endfunction
+
 function! bellforest#Scene#new() abort
   return deepcopy(s:Scene)
 endfunction
