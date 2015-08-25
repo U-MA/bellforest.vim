@@ -1,0 +1,16 @@
+Describe Vector
+  Before all
+    let v = bellforest#util#Vector#new()
+  End
+
+  Describe .push_back()
+    It adds a element at the end of vector
+      call v.push_back(1)
+      call v.push_back(2)
+      call v.push_back(3)
+      Assert Equals(v.pop_back(), 3)
+      Assert Equals(v.pop_back(), 2)
+      Assert Equals(v.pop_back(), 1)
+    End
+  End
+End
