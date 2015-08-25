@@ -15,6 +15,7 @@ function! s:EventDispathcer.dispatch() abort
   endfor
 endfunction
 
+
 let s:Director = { 'fps' : 60, 'is_end' : 0, 'pressed_key' : 0 }
 
 function! s:Director.set_fps(fps) abort
@@ -35,6 +36,8 @@ function! s:Director.run_with_scene(scene) abort
     endfor
 
     call s:EventDispathcer.dispatch()
+
+    " TODO update function
 
     " draw a:scene
     call a:scene.visit()
