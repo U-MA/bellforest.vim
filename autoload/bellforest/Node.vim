@@ -16,6 +16,31 @@ function! s:Node.draw() abort
   endif
 endfunction
 
+function! s:Node.draw_rect() abort
+  let l:visible_rect = self.visible_rect()
+
+  if l:visible_rect.width > 0 && l:visible_rect.height > 0
+    let l:abs_visible_pos = self.convert_absolute(l:visible_rect.position)
+    let l:top    = l:abs_visible_pos[0]
+    let l:bottom = l:abs_visible_pos[0] + l:visible_rect.height - 1
+    let l:cleft  = l:abs_visible_pos[1]
+    let l:cright = l:abs_visible_pos[1] + l:visible_rect.width - 1
+
+    let l:lnum = self.absolute_position()[0]
+    for l:line in self.data
+      if l:top <= l:lnum && l:lnum <= l:bottom
+        let l:bufline = getline(l:lnum)
+        let l:left    = l:cleft == 1 ? '' : l:bufline[: l:cleft-2]
+        let l:right   = l:bufline[l:cright :]
+        let l:subline = l:left . l:line[l:cleft-self.absolute_position()[1] : l:cright-self.absolute_position()[1]] . l:right
+        call setline(l:lnum, l:subline)
+      endif
+      let l:lnum += 1
+    endfor
+  endif
+endfunction
+
+
 function! s:Node.erase() abort
    if type(self.data) == type('')
     call self.erase_char()
@@ -76,30 +101,6 @@ function! s:Node.visible_rect() abort
   let l:rect.width    = max([0, l:right - l:left + 1])
   let l:rect.height   = max([0, l:bottom - l:top + 1])
   return l:rect
-endfunction
-
-function! s:Node.draw_rect() abort
-  let l:visible_rect = self.visible_rect()
-
-  if l:visible_rect.width > 0 && l:visible_rect.height > 0
-    let l:abs_visible_pos = self.convert_absolute(l:visible_rect.position)
-    let l:top    = l:abs_visible_pos[0]
-    let l:bottom = l:abs_visible_pos[0] + l:visible_rect.height - 1
-    let l:cleft  = l:abs_visible_pos[1]
-    let l:cright = l:abs_visible_pos[1] + l:visible_rect.width - 1
-
-    let l:lnum = self.absolute_position()[0]
-    for l:line in self.data
-      if l:top <= l:lnum && l:lnum <= l:bottom
-        let l:bufline = getline(l:lnum)
-        let l:left    = l:cleft == 1 ? '' : l:bufline[: l:cleft-2]
-        let l:right   = l:bufline[l:cright :]
-        let l:subline = l:left . l:line[l:cleft-self.absolute_position()[1] : l:cright-self.absolute_position()[1]] . l:right
-        call setline(l:lnum, l:subline)
-      endif
-      let l:lnum += 1
-    endfor
-  endif
 endfunction
 
 function! s:Node.get_event_dispatcher() abort
