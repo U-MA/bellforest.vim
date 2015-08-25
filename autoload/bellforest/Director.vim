@@ -39,7 +39,7 @@ function! s:Director.run_with_scene(scene) abort
 
     call s:EventDispathcer.dispatch()
 
-    " TODO update function
+    call bellforest#Scheduler#instance().update()
 
     " draw a:scene
     call a:scene.visit()

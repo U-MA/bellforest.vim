@@ -9,6 +9,10 @@ function! s:Scene.add_child(node) abort
   call add(self.childs, a:node)
 endfunction
 
+function! s:Scene.schedule_update() abort
+  call bellforest#Scheduler#instance().schedule(self)
+endfunction
+
 function! s:Scene.visit() abort
   for l:child in self.childs
     call l:child.visit()
