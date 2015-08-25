@@ -1,4 +1,4 @@
-let s:Scene = { 'width' : 0, 'height' : 0, 'childs' : [] }
+let s:Scene = { 'name' : '', 'width' : 0, 'height' : 0, 'childs' : [] }
 
 function! s:Scene.init() abort
   " You may override this function
@@ -51,6 +51,8 @@ function! s:Scene.child_init() abort
   endfor
 endfunction
 
-function! bellforest#Scene#new() abort
-  return deepcopy(s:Scene)
+function! bellforest#Scene#new(name) abort
+  let l:scene = deepcopy(s:Scene)
+  let l:scene.name = a:name
+  return l:scene
 endfunction

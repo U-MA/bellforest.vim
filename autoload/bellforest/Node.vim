@@ -1,6 +1,10 @@
 let s:Node = { 'position' : [ 1, 1 ], 'width' : 1, 'height' : 1,
   \            'data' : [], 'childs' : [], 'parent' : {} }
 
+function! s:Node.init() abort
+  " You may override this function
+endfunction
+
 function! s:Node.visit() abort
   call self.draw()
   for l:child in self.childs

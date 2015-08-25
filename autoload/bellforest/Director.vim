@@ -23,7 +23,7 @@ function! s:Director.set_fps(fps) abort
 endfunction
 
 function! s:Director.run_with_scene(scene) abort
-  tabnew XXXXX
+  execute 'tabnew' a:scene.name
 
   call a:scene.init()
   call a:scene.child_init()
