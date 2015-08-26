@@ -1,4 +1,5 @@
-let s:MoveBy = { 'second' : 0, 'target' : [], 'duration' : 0, 'actor' : {} }
+let s:MoveBy = { 'second' : 0, 'target' : [], 'duration' : 0, 'actor' : {},
+  \              'start_position' : [] }
 
 function! s:MoveBy.step(dt) abort
   let l:delta = self.delta(a:dt)
@@ -22,8 +23,8 @@ function! s:MoveBy.stop() abort
 endfunction
 
 function! s:MoveBy.delta(dt) abort
-  return [ (a:dt / (self.second - self.duration)) * (self.target[0] - self.actor.position[0]),
-    \      (a:dt / (self.second - self.duration)) * (self.target[1] - self.actor.position[1]) ]
+  return [ (a:dt / (self.second - self.duration)) * ((self.start_position[0] + self.target[0] - 1) - self.actor.position[0]),
+    \      (a:dt / (self.second - self.duration)) * ((self.start_position[1] + self.target[1] - 1) - self.actor.position[1]) ]
 endfunction
 
 function! bellforest#action#MoveBy#new(second, delta_position) abort
