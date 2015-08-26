@@ -9,6 +9,10 @@ function! s:Node.schedule_update() abort
   call bellforest#Scheduler#instance().schedule(self)
 endfunction
 
+function! s:Node.run_action(action) abort
+  call bellforest#ActionManager#instance().add_action(self, a:action)
+endfunction
+
 function! s:Node.visit() abort
   call self.draw()
   for l:child in self.childs
@@ -29,18 +33,18 @@ function! s:Node.draw_rect() abort
 
   if l:visible_rect.width > 0 && l:visible_rect.height > 0
     let l:abs_visible_pos = self.convert_absolute(l:visible_rect.position)
-    let l:top    = l:abs_visible_pos[0]
-    let l:bottom = l:abs_visible_pos[0] + l:visible_rect.height - 1
-    let l:cleft  = l:abs_visible_pos[1]
-    let l:cright = l:abs_visible_pos[1] + l:visible_rect.width - 1
+    let l:top    = float2nr(l:abs_visible_pos[0])
+    let l:bottom = float2nr(l:abs_visible_pos[0] + l:visible_rect.height - 1)
+    let l:cleft  = float2nr(l:abs_visible_pos[1])
+    let l:cright = float2nr(l:abs_visible_pos[1] + l:visible_rect.width - 1)
 
-    let l:lnum = self.absolute_position()[0]
+    let l:lnum = float2nr(self.absolute_position()[0])
     for l:line in self.data
       if l:top <= l:lnum && l:lnum <= l:bottom
         let l:bufline = getline(l:lnum)
         let l:left    = l:cleft == 1 ? '' : l:bufline[: l:cleft-2]
         let l:right   = l:bufline[l:cright :]
-        let l:subline = l:left . l:line[l:cleft-self.absolute_position()[1] : l:cright-self.absolute_position()[1]] . l:right
+        let l:subline = l:left . l:line[l:cleft-float2nr(self.absolute_position()[1]) : l:cright-float2nr(self.absolute_position()[1])] . l:right
         call setline(l:lnum, l:subline)
       endif
       let l:lnum += 1
@@ -63,12 +67,12 @@ function! s:Node.erase_rect() abort
   if l:visible_rect.width > 0 && l:visible_rect.height > 0
 
     let l:abs_visible_pos = self.convert_absolute(l:visible_rect.position)
-    let l:top    = l:abs_visible_pos[0]
-    let l:bottom = l:abs_visible_pos[0] + l:visible_rect.height - 1
-    let l:cleft  = l:abs_visible_pos[1]
-    let l:cright = l:abs_visible_pos[1] + l:visible_rect.width - 1
+    let l:top    = float2nr(l:abs_visible_pos[0])
+    let l:bottom = float2nr(l:abs_visible_pos[0] + l:visible_rect.height - 1)
+    let l:cleft  = float2nr(l:abs_visible_pos[1])
+    let l:cright = float2nr(l:abs_visible_pos[1] + l:visible_rect.width - 1)
 
-    let l:lnum = self.absolute_position()[0]
+    let l:lnum = float2nr(self.absolute_position()[0])
     for l:line in self.data
       if l:top <= l:lnum && l:lnum <= l:bottom
         let l:bufline = getline(l:lnum)
@@ -96,18 +100,34 @@ function! s:Node.convert_absolute(position) abort
     \     l:abs_pos[1] + a:position[1] - 1]
 endfunction
 
+function! s:max(x, y) abort
+  if a:x > a:y
+    return a:x
+  else
+    return a:y
+  endif
+endfunction
+
+function! s:min(x, y) abort
+  if a:x < a:y
+    return a:x
+  else
+    return a:y
+  endif
+endfunction
+
 function! s:Node.visible_rect() abort
   let l:pvisible = self.parent.visible_rect()
 
-  let l:top    = max([l:pvisible.position[0], self.position[0]])
-  let l:bottom = min([l:pvisible.position[0] + l:pvisible.height - 1, self.position[0] + self.height - 1])
-  let l:left   = max([l:pvisible.position[1], self.position[1]])
-  let l:right  = min([l:pvisible.position[1] + l:pvisible.width - 1, self.position[1] + self.width - 1])
+  let l:top    = s:max(l:pvisible.position[0], self.position[0])
+  let l:bottom = s:min(l:pvisible.position[0] + l:pvisible.height - 1, self.position[0] + self.height - 1)
+  let l:left   = s:max(l:pvisible.position[1], self.position[1])
+  let l:right  = s:min(l:pvisible.position[1] + l:pvisible.width - 1, self.position[1] + self.width - 1)
 
   let l:rect = { 'position' : [ 1, 1 ], 'width' : 1, 'height' : 1 }
   let l:rect.position = [l:top - self.position[0] + 1, l:left - self.position[1] + 1]
-  let l:rect.width    = max([0, l:right - l:left + 1])
-  let l:rect.height   = max([0, l:bottom - l:top + 1])
+  let l:rect.width    = s:max(0, l:right - l:left + 1)
+  let l:rect.height   = s:max(0, l:bottom - l:top + 1)
   return l:rect
 endfunction
 

@@ -30,7 +30,9 @@ function! s:Director.run_with_scene(scene) abort
   call a:scene.init()
   call a:scene.child_init()
 
+  let l:start = reltime()
   while !self.is_end
+    let l:dt = s:reltime2msec(l:start)
     let self.pressed_key = getchar(0)
 
     for l:child in a:scene.childs
@@ -39,12 +41,15 @@ function! s:Director.run_with_scene(scene) abort
 
     call s:EventDispathcer.dispatch()
 
+    call bellforest#ActionManager#instance().update(l:dt / 1000.0)
+
     call bellforest#Scheduler#instance().update()
 
     " draw a:scene
     call a:scene.visit()
 
     redraw
+    let l:start = reltime()
     execute 'sleep ' float2nr(s:fps2msec(self.fps)) 'm'
   endwhile
 
@@ -68,3 +73,9 @@ function! s:fps2msec(fps) abort
   return (1.0 / a:fps) * 1000
 endfunction
 
+function! s:reltime2msec(start) abort
+  let l:time = reltime(a:start)
+  let l:sec  = l:time[0]
+  let l:msec = l:time[1] " マイクロ秒
+  return l:sec * 1000.0 + l:msec / 1000.0
+endfunction
