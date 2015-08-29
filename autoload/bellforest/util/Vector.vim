@@ -9,8 +9,20 @@ function! s:vector.pop_back() abort
   return l:ret
 endfunction
 
+function! s:vector.get(idx) abort
+  return self.data[a:idx]
+endfunction
+
 function! s:vector.size() abort
   return len(self.data)
+endfunction
+
+function! s:vector.erase_object(obj) abort
+  for l:i in range(self.size())
+    if self.data[l:i] is# a:obj
+      return remove(self.data, l:i)
+    endif
+  endfor
 endfunction
 
 function! bellforest#util#Vector#new() abort

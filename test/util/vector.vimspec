@@ -37,4 +37,20 @@ Describe Vector
       Assert Equals(v.size(), 3)
     End
   End
+
+  Describe .erase_object()
+    It erases an object
+      call v.push_back(1)
+      call v.erase_object(1)
+
+      Assert Equals(v.size(), 0)
+    End
+
+    It erases an dictionary
+      call v.push_back({ 'a' : 0 })
+      call v.erase_object(v.get(0))
+
+      Assert Equals(v.size(), 0)
+    End
+  End
 End
