@@ -1,5 +1,5 @@
 Describe Vector
-  Before all
+  Before each
     let v = bellforest#util#Vector#new()
   End
 
@@ -11,6 +11,30 @@ Describe Vector
       Assert Equals(v.pop_back(), 3)
       Assert Equals(v.pop_back(), 2)
       Assert Equals(v.pop_back(), 1)
+    End
+  End
+
+  Describe .size()
+    It returns 0 when init
+      Assert Equals(v.size(), 0)
+    End
+
+    It returns 3 after push_back() three times
+      call v.push_back(1)
+      call v.push_back(2)
+      call v.push_back(3)
+
+      Assert Equals(v.size(), 3)
+    End
+
+    It returns 3 after push_back() four times and pop_back() once
+      call v.push_back(1)
+      call v.push_back(2)
+      call v.push_back(3)
+      call v.push_back(4)
+      call v.pop_back()
+
+      Assert Equals(v.size(), 3)
     End
   End
 End

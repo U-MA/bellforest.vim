@@ -9,6 +9,10 @@ function! s:vector.pop_back() abort
   return l:ret
 endfunction
 
+function! s:vector.size() abort
+  return len(self.data)
+endfunction
+
 function! bellforest#util#Vector#new() abort
   return deepcopy(s:vector)
 endfunction
