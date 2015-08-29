@@ -1,6 +1,6 @@
 let s:random = { 'seed' : 0 }
 
-function! s:random.seed(s) abort
+function! s:random.set_seed(s) abort
   let self.seed = a:s
 endfunction
 
