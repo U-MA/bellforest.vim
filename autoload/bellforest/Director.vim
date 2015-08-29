@@ -35,7 +35,7 @@ function! s:Director.run_with_scene(scene) abort
     let l:dt = s:reltime2msec(l:start)
     let self.pressed_key = getchar(0)
 
-    for l:child in a:scene.childs
+    for l:child in a:scene.childs.data
       call l:child.erase()
     endfor
 

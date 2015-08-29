@@ -6,7 +6,12 @@ endfunction
 
 function! s:Scene.add_child(node) abort
   let a:node.parent = self
-  call add(self.childs, a:node)
+  call self.childs.push_back(a:node)
+  "call add(self.childs, a:node)
+endfunction
+
+function! s:Scene.remove_child(child) abort
+  call self.childs.erase_object(a:child)
 endfunction
 
 function! s:Scene.schedule_update() abort
@@ -14,7 +19,7 @@ function! s:Scene.schedule_update() abort
 endfunction
 
 function! s:Scene.visit() abort
-  for l:child in self.childs
+  for l:child in self.childs.data
     call l:child.visit()
   endfor
 endfunction
@@ -50,7 +55,7 @@ function! s:Scene.get_event_dispatcher() abort
 endfunction
 
 function! s:Scene.child_init() abort
-  for l:child in self.childs
+  for l:child in self.childs.data
     call l:child.init()
   endfor
 endfunction
@@ -58,5 +63,6 @@ endfunction
 function! bellforest#Scene#new(name) abort
   let l:scene = deepcopy(s:Scene)
   let l:scene.name = a:name
+  let l:scene.childs = bellforest#util#Vector#new()
   return l:scene
 endfunction
