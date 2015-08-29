@@ -9,4 +9,20 @@ Describe Rect
       Assert Equals(l:rect.height,      4)
     End
   End
+
+  Describe .intersect(rect)
+    It returns true(not 0) when self intersect a:rect
+      let l:rect1 = bellforest#Rect#new([1, 1], 1, 1)
+      let l:rect2 = bellforest#Rect#new([1, 1], 1, 1)
+
+      Assert Equals(l:rect1.intersect(l:rect2), 1)
+    End
+
+    It reutns false(not 0) when self do not intersect a:rect
+      let l:rect1 = bellforest#Rect#new([1, 1], 1, 1)
+      let l:rect2 = bellforest#Rect#new([2, 2], 1, 1)
+
+      Assert Equals(l:rect1.intersect(l:rect2), 0)
+    End
+  End
 End
