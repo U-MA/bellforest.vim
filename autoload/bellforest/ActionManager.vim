@@ -7,6 +7,7 @@ function! s:ActionManager.add_action(actor, action) abort
 endfunction
 
 function! s:ActionManager.update(dt) abort
+  let l:will_remove = []
   for l:i in range(len(self.elements))
     let l:element = self.elements[l:i]
 
@@ -14,8 +15,12 @@ function! s:ActionManager.update(dt) abort
     if l:element.is_done()
       call l:element.stop()
 
-      call remove(self.elements, l:i)
+      call add(l:will_remove, l:i)
     endif
+  endfor
+
+  for l:i in reverse(l:will_remove)
+    call remove(self.elements, l:i)
   endfor
 endfunction
 
