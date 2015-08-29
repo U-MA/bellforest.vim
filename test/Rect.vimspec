@@ -1,0 +1,12 @@
+Describe Rect
+  Describe #new(position, width, height)
+    It set up a rect
+      let l:rect = bellforest#Rect#new([1, 2], 3, 4)
+
+      Assert Equals(l:rect.position[0], 1)
+      Assert Equals(l:rect.position[1], 2)
+      Assert Equals(l:rect.width,       3)
+      Assert Equals(l:rect.height,      4)
+    End
+  End
+End
