@@ -1,0 +1,21 @@
+Describe EventDispatcher
+  Before each
+    let dispatcher = bellforest#EventDispatcher#instance()
+  End
+
+  Describe .add_event_listener()
+    It add a listener
+
+      let obj = { 'is_press' : 0 }
+      function! obj.press(key) abort
+        let self.is_press = 1
+      endfunction
+
+      let l:listener = bellforest#EventListenerKeyPressed#new()
+      let l:listener.press = bellforest#Macro#create_callback1(obj.press, obj)
+      call dispatcher.add_event_listener(l:listener)
+      call dispatcher.dispatch()
+      Assert Equals(obj.is_press, 1)
+    End
+  End
+End
