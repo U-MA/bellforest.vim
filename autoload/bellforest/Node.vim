@@ -22,7 +22,8 @@ endfunction
 
 function! s:Node.draw() abort
   if type(self.data) == type('')
-    call self.draw_char()
+    "TODO
+    "call self.draw_char()
   elseif type(self.data) == type([])
     call self.draw_rect()
   endif
@@ -59,7 +60,8 @@ endfunction
 
 function! s:Node.erase() abort
    if type(self.data) == type('')
-    call self.erase_char()
+     "TODO
+     "call self.erase_char()
   elseif type(self.data) == type([])
     call self.erase_rect()
   endif
