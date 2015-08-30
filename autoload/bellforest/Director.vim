@@ -9,15 +9,16 @@ function! s:Director.run_with_scene(scene) abort
 
   let self.is_end = 0
 
-  call a:scene.init()
-  call a:scene.child_init()
+  let self.scene = a:scene
+  call self.scene.init()
+  call self.scene.child_init()
 
   let l:start = reltime()
   while !self.is_end
     let l:dt = s:reltime2msec(l:start)
     let self.pressed_key = getchar(0)
 
-    for l:child in a:scene.childs.data
+    for l:child in self.scene.childs.data
       call l:child.erase()
     endfor
 
@@ -28,7 +29,7 @@ function! s:Director.run_with_scene(scene) abort
     call bellforest#Scheduler#instance().update(l:dt / 1000.0)
 
     " draw a:scene
-    call a:scene.visit()
+    call self.scene.visit()
 
     redraw
     let l:start = reltime()
@@ -44,6 +45,16 @@ endfunction
 
 function! s:Director.get_event_dispatcher() abort
   return bellforest#EventDispatcher#instance()
+endfunction
+
+function! s:Director.replace_scene(scene) abort
+  for l:child in self.scene.childs.data
+    call l:child.erase()
+  endfor
+
+  let self.scene = a:scene
+  call a:scene.init()
+  call a:scene.child_init()
 endfunction
 
 " Director is singleton
