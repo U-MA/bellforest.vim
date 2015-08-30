@@ -21,7 +21,7 @@ function! s:Director.run_with_scene(scene) abort
       call l:child.erase()
     endfor
 
-    call s:EventDispathcer.dispatch()
+    call bellforest#EventDispatcher#instance().dispatch()
 
     call bellforest#ActionManager#instance().update(l:dt / 1000.0)
 
