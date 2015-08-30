@@ -9,6 +9,10 @@ function! s:Node.schedule_update() abort
   call bellforest#Scheduler#instance().schedule(self)
 endfunction
 
+function! s:Node.unschedule_update() abort
+  call bellforest#Scheduler#instance().unschedule(self)
+endfunction
+
 function! s:Node.run_action(action) abort
   call bellforest#ActionManager#instance().add_action(self, a:action)
 endfunction

@@ -18,6 +18,10 @@ function! s:Scene.schedule_update() abort
   call bellforest#Scheduler#instance().schedule(self)
 endfunction
 
+function! s:Scene.unschedule_update() abort
+  call bellforest#Scheduler#instance().unschedule(self)
+endfunction
+
 function! s:Scene.visit() abort
   for l:child in self.childs.data
     call l:child.visit()

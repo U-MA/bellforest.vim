@@ -43,7 +43,7 @@ function! s:Director.run_with_scene(scene) abort
 
     call bellforest#ActionManager#instance().update(l:dt / 1000.0)
 
-    call bellforest#Scheduler#instance().update()
+    call bellforest#Scheduler#instance().update(l:dt / 1000.0)
 
     " draw a:scene
     call a:scene.visit()
