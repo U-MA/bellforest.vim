@@ -33,6 +33,11 @@ function! s:Node.rect() abort
   return bellforest#Rect#new(self.position, self.width, self.height)
 endfunction
 
+function! s:Node.add_child(child) abort
+  let a:child.parent = self
+  call add(self.childs, a:child)
+endfunction
+
 function! s:Node.draw_rect() abort
   let l:visible_rect = self.visible_rect()
 
