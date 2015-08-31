@@ -64,9 +64,13 @@ function! s:Scene.child_init() abort
   endfor
 endfunction
 
-function! bellforest#Scene#new(name) abort
+function! bellforest#Scene#new(name, ...) abort
   let l:scene = deepcopy(s:Scene)
   let l:scene.name = a:name
+  if a:0 > 0
+    let l:scene.height = a:000[0]
+    let l:scene.width  = a:000[1]
+  endif
   let l:scene.childs = bellforest#util#Vector#new()
   return l:scene
 endfunction
