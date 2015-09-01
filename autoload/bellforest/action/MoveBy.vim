@@ -2,15 +2,24 @@ let s:MoveBy = { 'second' : 0, 'target' : [], 'duration' : 0, 'actor' : {},
   \              'start_position' : [] }
 
 function! s:MoveBy.step(dt) abort
-  let l:delta = [ self.dps[0] * a:dt, self.dps[1] * a:dt ]
-  if self.target[0] != 0
-    let self.actor.position[0] += l:delta[0]
-  endif
+  if self.duration + a:dt > self.second
+    if self.target[0] != 0
+      let self.actor.position[0] = self.start_position[0] + self.target[0]
+    endif
 
-  if self.target[1] != 0
-    let self.actor.position[1] += l:delta[1]
-  endif
+    if self.target[1] != 0
+      let self.actor.position[1] = self.start_position[1] + self.target[1]
+    endif
+  else
+    let l:delta = [ self.dps[0] * a:dt, self.dps[1] * a:dt ]
+    if self.target[0] != 0
+      let self.actor.position[0] += l:delta[0]
+    endif
 
+    if self.target[1] != 0
+      let self.actor.position[1] += l:delta[1]
+    endif
+  endif
   let self.duration += a:dt
 endfunction
 
@@ -19,7 +28,8 @@ function! s:MoveBy.is_done() abort
 endfunction
 
 function! s:MoveBy.stop() abort
-  " TODO
+  let self.actor.position[0] = float2nr(self.actor.position[0])
+  let self.actor.position[1] = float2nr(self.actor.position[1])
 endfunction
 
 function! s:MoveBy.delta(dt) abort
