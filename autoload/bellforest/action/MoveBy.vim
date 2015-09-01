@@ -2,7 +2,7 @@ let s:MoveBy = { 'second' : 0, 'target' : [], 'duration' : 0, 'actor' : {},
   \              'start_position' : [] }
 
 function! s:MoveBy.step(dt) abort
-  let l:delta = self.delta(a:dt)
+  let l:delta = [ self.dps[0] * a:dt, self.dps[1] * a:dt ]
   if self.target[0] != 0
     let self.actor.position[0] += l:delta[0]
   endif
