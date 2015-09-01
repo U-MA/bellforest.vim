@@ -1,0 +1,15 @@
+Describe MoveBy
+  Describe #new()
+    It set up dps interger
+      let moveby = bellforest#action#MoveBy#new(3, [3, 12])
+      Assert Equals(moveby.dps[0], 1)
+      Assert Equals(moveby.dps[1], 4)
+    End
+
+    It set up dps float
+      let moveby = bellforest#action#MoveBy#new(4, [7, 7])
+      Assert Equals(moveby.dps[0], 1.75)
+      Assert Equals(moveby.dps[1], 1.75)
+    End
+  End
+End

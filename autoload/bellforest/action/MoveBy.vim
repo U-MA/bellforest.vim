@@ -31,5 +31,6 @@ function! bellforest#action#MoveBy#new(second, delta_position) abort
   let l:moveby = deepcopy(s:MoveBy)
   let l:moveby.second = a:second
   let l:moveby.target = a:delta_position
+  let l:moveby.dps    = [ (a:delta_position[0] * 1.0) / a:second, (a:delta_position[1] * 1.0) / a:second ]
   return l:moveby
 endfunction
