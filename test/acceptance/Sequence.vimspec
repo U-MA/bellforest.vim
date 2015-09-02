@@ -1,0 +1,36 @@
+Describe acceptance/Sequence
+  Before all
+    let scene = bellforest#Scene#new('acceptance/Sequence')
+    let manager   = bellforest#ActionManager#instance()
+  End
+
+  Before each
+    let node  = bellforest#Node#new([1, 1], ['#'])
+  End
+
+  Describe xxx
+    It xxx
+      let moveby = bellforest#action#MoveBy#new(1, [1, 1])
+      let sequence = bellforest#action#Sequence#new(moveby)
+      call node.run_action(sequence)
+
+      call manager.update(1.0)
+
+      Assert Equals(node.position[0], 2)
+      Assert Equals(node.position[1], 2)
+    End
+
+    It yyy
+      let moveby1 = bellforest#action#MoveBy#new(1, [1, 1])
+      let moveby2 = bellforest#action#MoveBy#new(1, [1, 1])
+      let sequence = bellforest#action#Sequence#new(moveby1, moveby2)
+      call node.run_action(sequence)
+
+      call manager.update(1.0)
+      call manager.update(1.0)
+
+      Assert Equals(node.position[0], 3)
+      Assert Equals(node.position[1], 3)
+    End
+  End
+End

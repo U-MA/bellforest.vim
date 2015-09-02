@@ -13,4 +13,19 @@ Describe Sequence
       Assert Equals(sequence.size(), 2)
     End
   End
+
+  Describe .update(dt)
+    It update a current action
+    End
+  End
+
+  Describe .current_action()
+    It return a current action
+    End
+  End
+
+  Describe .is_done()
+    It return true when all actions is done
+    End
+  End
 End
