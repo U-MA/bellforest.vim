@@ -17,6 +17,10 @@ function! s:Node.run_action(action) abort
   call bellforest#ActionManager#instance().add_action(self, a:action)
 endfunction
 
+function! s:Node.remove_from_parent() abort
+  call self.parent.remove_child(self)
+endfunction
+
 function! s:Node.visit() abort
   call self.draw()
   for l:child in self.childs
