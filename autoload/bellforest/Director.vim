@@ -4,8 +4,15 @@ function! s:Director.set_fps(fps) abort
   let self.fps = a:fps
 endfunction
 
+function! s:Director.set_filetype(filename) abort
+  let self.filename = a:filename
+endfunction
+
 function! s:Director.run_with_scene(scene) abort
   execute 'tabnew' a:scene.name
+  if has_key(self, 'filename')
+    execute 'setlocal filetype=' . self.filename
+  endif
 
   let self.is_end = 0
 
