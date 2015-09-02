@@ -1,4 +1,4 @@
-let s:RemoveSelf = {}
+let s:RemoveSelf = { 'actor' : {} }
 
 function! s:RemoveSelf.step(dt) abort
   call self.actor.remove_from_parent()
