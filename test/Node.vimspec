@@ -1,11 +1,19 @@
 Describe Node
   Describe .remove_from_parent()
-    It is removed from parent
+    It is removed from Scene
       let scene = bellforest#Scene#new('NodeTest')
       let node = bellforest#Node#new([1, 1], ['#'])
       call scene.add_child(node)
       call node.remove_from_parent()
       Assert Equals(len(scene.childs.data), 0)
+    End
+
+    It is removed from Node
+      let node1 = bellforest#Node#new([1, 1], ['#'])
+      let node2 = bellforest#Node#new([1, 1], ['#'])
+      call node1.add_child(node2)
+      call node2.remove_from_parent()
+      Assert Equals(len(node1.childs.data), 0)
     End
   End
 End

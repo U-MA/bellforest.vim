@@ -1,5 +1,6 @@
 let s:Node = { 'position' : [ 1, 1 ], 'width' : 1, 'height' : 1,
-  \            'data' : [], 'childs' : [], 'parent' : {} }
+  \            'data' : [], 'childs' : {}, 'parent' : {} }
+let s:Node.childs = bellforest#util#Vector#new()
 
 function! s:Node.init() abort
   " You may override this function
@@ -17,13 +18,17 @@ function! s:Node.run_action(action) abort
   call bellforest#ActionManager#instance().add_action(self, a:action)
 endfunction
 
+function! s:Node.remove_child(child) abort
+  call self.childs.erase_object(a:child)
+endfunction
+
 function! s:Node.remove_from_parent() abort
   call self.parent.remove_child(self)
 endfunction
 
 function! s:Node.visit() abort
   call self.draw()
-  for l:child in self.childs
+  for l:child in self.childs.data
     call l:child.visit()
   endfor
 endfunction
@@ -43,7 +48,7 @@ endfunction
 
 function! s:Node.add_child(child) abort
   let a:child.parent = self
-  call add(self.childs, a:child)
+  call self.childs.push_back(a:child)
 endfunction
 
 function! s:Node.draw_rect() abort
