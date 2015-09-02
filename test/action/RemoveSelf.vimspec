@@ -1,0 +1,15 @@
+Describe RemoveSelf
+  Describe #new()
+    It create an action which remove node from parent
+      let scene = bellforest#Scene#new('RemoveSelfTest')
+      let node = bellforest#Node#new([1, 1], ['#'])
+      let remove_self = bellforest#action#RemoveSelf#new()
+      call node.run_action(remove_self)
+      call scene.add_child(node)
+
+      call bellforest#ActionManager#instance().update(1)
+
+      Assert Equals(scene.childs.size(), 0)
+    End
+  End
+End
