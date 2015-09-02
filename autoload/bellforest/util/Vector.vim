@@ -17,6 +17,10 @@ function! s:vector.size() abort
   return len(self.data)
 endfunction
 
+function! s:vector.empty() abort
+  let self.data = []
+endfunction
+
 function! s:vector.erase_object(obj) abort
   for l:i in range(self.size())
     if self.data[l:i] is# a:obj
