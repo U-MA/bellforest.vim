@@ -58,6 +58,7 @@ function! s:Director.replace_scene(scene) abort
   for l:child in self.scene.childs.data
     call l:child.erase()
   endfor
+  call self.scene.cleanup()
 
   let self.scene = a:scene
   call a:scene.init()
