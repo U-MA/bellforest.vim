@@ -10,6 +10,10 @@ endfunction
 
 function! s:Director.run_with_scene(scene) abort
   execute 'tabnew' a:scene.name
+  if has_key(self, 'init')
+    call self.init()
+  endif
+
   if has_key(self, 'filename')
     execute 'setlocal filetype=' . self.filename
   endif
