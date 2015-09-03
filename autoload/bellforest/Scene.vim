@@ -22,6 +22,10 @@ function! s:Scene.unschedule_update() abort
   call bellforest#Scheduler#instance().unschedule(self)
 endfunction
 
+function! s:Scene.cleanup() abort
+  call bellforest#EventDispatcher#instance().remove_event_with_target(self)
+endfunction
+
 function! s:Scene.visit() abort
   for l:child in self.childs.data
     call l:child.visit()

@@ -7,4 +7,20 @@ Describe Scene
       Assert Equals(scene.height, 5)
     End
   End
+
+  Describe .cleanup()
+    It remove some events bound to this scene from EventDispatcher
+      let scene = bellforest#Scene#new('name')
+      function! s:foo(key) abort
+        "do nothing
+      endfunction
+      let listener = bellforest#EventListenerKeyPressed#new()
+      let listener.press = function('s:foo')
+      let dispatcher = bellforest#EventDispatcher#instance()
+      let dispatcher.add_event_listener(listener, scene)
+      call scene.cleanup()
+
+      Assert Equals(dispatcher.listeners.size(), 0)
+    End
+  End
 End
