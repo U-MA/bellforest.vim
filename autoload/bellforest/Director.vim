@@ -10,6 +10,8 @@ endfunction
 
 function! s:Director.run_with_scene(scene) abort
   execute 'tabnew' a:scene.name
+
+  call a:scene.draw_space(a:scene.height, a:scene.width)
   if has_key(self, 'init')
     call self.init()
   endif
@@ -52,6 +54,8 @@ endfunction
 
 function! s:Director.end() abort
   let self.is_end = 1
+
+  call self.cleanup()
 endfunction
 
 function! s:Director.get_event_dispatcher() abort
@@ -67,6 +71,11 @@ function! s:Director.replace_scene(scene) abort
   let self.scene = a:scene
   call a:scene.init()
   call a:scene.child_init()
+endfunction
+
+function! s:Director.cleanup() abort
+  " all sigletons reset
+  call bellforest#EventDispatcher#instance().remove_all_events()
 endfunction
 
 " Director is singleton

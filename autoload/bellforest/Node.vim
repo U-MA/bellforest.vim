@@ -26,6 +26,13 @@ function! s:Node.remove_from_parent() abort
   call self.parent.remove_child(self)
 endfunction
 
+function! s:Node.child_init() abort
+  for l:child in self.childs.data
+    call l:child.init()
+    call l:child.child_init()
+  endfor
+endfunction
+
 function! s:Node.visit() abort
   call self.draw()
   for l:child in self.childs.data

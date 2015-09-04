@@ -20,6 +20,10 @@ function! s:EventDispatcher.remove_event_with_target(node) abort
   endfor
 endfunction
 
+function! s:EventDispatcher.remove_all_events() abort
+  call self.listeners.empty()
+endfunction
+
 function! s:EventDispatcher.dispatch() abort
   let l:key = bellforest#Director#instance().pressed_key
   for l:listener in self.listeners.data

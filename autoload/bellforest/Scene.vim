@@ -65,6 +65,7 @@ endfunction
 function! s:Scene.child_init() abort
   for l:child in self.childs.data
     call l:child.init()
+    call l:child.child_init()
   endfor
 endfunction
 
