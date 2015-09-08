@@ -1,4 +1,12 @@
 Describe Node
+  Describe #new(...)
+    It create an empty node
+      let node = bellforest#Node#new()
+      Assert Equals(node._data, [])
+      Assert Equals(node._position, [1, 1])
+    End
+  End
+
   Describe .remove_from_parent()
     It is removed from Scene
       let scene = bellforest#Scene#new('NodeTest')

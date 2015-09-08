@@ -174,11 +174,18 @@ function! s:Node.get_event_dispatcher() abort
   return bellforest#Director#instance().get_event_dispatcher()
 endfunction
 
-function! bellforest#Node#new(position, data) abort
+function! bellforest#Node#new(...) abort
   let l:node = deepcopy(s:Node)
-  let l:node.position = copy(a:position)
-  let l:node.data     = a:data
-  let l:node.width    = len(a:data[0])
-  let l:node.height   = len(a:data)
+  if a:0
+    let l:node._position = copy(a:000[0])
+    let l:node._data     = a:000[1]
+    let l:node._width    = len(l:node._data[0])
+    let l:node._height   = len(l:node._data)
+  else
+    let l:node._position = [1, 1]
+    let l:node._data     = []
+    let l:node._width    = 0
+    let l:node._height   = 0
+  endif
   return l:node
 endfunction
