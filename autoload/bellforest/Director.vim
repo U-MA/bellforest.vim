@@ -52,11 +52,18 @@ function! s:Director.run_with_scene(scene) abort
   bdelete!
 endfunction
 
+function! s:Director.count_childs() abort
+  if !has_key(self, 'scene')
+    return 0
+  endif
+  return self.scene.count_childs()
+endfunction
+
 function! s:Director.get_info(key) abort
   if a:key ==# 'listeners'
     return printf("listeners: %d", self.get_event_dispatcher().listeners.size())
   elseif a:key ==# 'objects'
-    return printf("objects: %d", 0)
+    return printf("objects: %d", self.count_childs())
   else
     return 'key not found'
   endif

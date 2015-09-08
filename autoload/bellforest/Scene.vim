@@ -32,6 +32,14 @@ function! s:Scene.visit() abort
   endfor
 endfunction
 
+function! s:Scene.count_childs() abort
+  let l:count = 0
+  for l:child in self.childs.data
+    let l:count += l:child.count_childs() + 1
+  endfor
+  return l:count
+endfunction
+
 function! s:Scene.draw_space(height, width) abort
   let self.height = a:height
   let self.width  = a:width

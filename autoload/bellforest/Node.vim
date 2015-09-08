@@ -26,6 +26,14 @@ function! s:Node.remove_from_parent() abort
   call self.parent.remove_child(self)
 endfunction
 
+function! s:Node.count_childs() abort
+  let l:count = self.childs.size()
+  for l:child in self.childs.data
+    let l:count += l:child.count_childs()
+  endfor
+  return l:count
+endfunction
+
 function! s:Node.child_init() abort
   for l:child in self.childs.data
     call l:child.init()

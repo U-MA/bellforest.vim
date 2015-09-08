@@ -34,4 +34,18 @@ Describe Director
     Assert Match(getline(1), 'listeners: 1')
     bdelete!
   End
+
+  It print the number of all childs
+    tabnew 'print_debug'
+    call director.print_debug(1, 'objects')
+    Assert Match(getline(1), 'objects: 0')
+
+    let scene = bellforest#Scene#new('xxx')
+    call scene.add_child(bellforest#Node#new([1, 1], ['#']))
+    call scene.add_child(bellforest#Node#new([2, 2], ['#']))
+    let director.scene = scene
+    call director.print_debug(1, 'objects')
+    Assert Match(getline(1), 'objects: 2')
+    bdelete!
+  End
 End
