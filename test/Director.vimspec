@@ -3,6 +3,14 @@ Describe Director
     let director = bellforest#Director#instance()
   End
 
+  After each
+    call director.cleanup()
+  End
+
+  function! s:press(key) abort
+    " fall through
+  endfunction
+
   Describe .print_debug(line, key)
     It print a debug information specified key at line
       tabnew 'print_debug'
@@ -12,5 +20,18 @@ Describe Director
       Assert Match(getline(2), 'objects: \d\+')
       bdelete!
     End
+  End
+
+  It print the number of listeners
+    tabnew 'print_debug'
+    call director.print_debug(1, 'listeners')
+    Assert Match(getline(1), 'listeners: 0')
+
+    let listener = bellforest#EventListenerKeyPressed#new()
+    let listener.press = function('s:press')
+    call director.get_event_dispatcher().add_event_listener(listener)
+    call director.print_debug(1, 'listeners')
+    Assert Match(getline(1), 'listeners: 1')
+    bdelete!
   End
 End
