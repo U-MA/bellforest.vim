@@ -4,6 +4,10 @@ function! s:Node.init() abort
   " You may override this function
 endfunction
 
+function! s:Node.set_data(list) abort
+  let self._data = a:list
+endfunction
+
 function! s:Node.schedule_update() abort
   call bellforest#Scheduler#instance().schedule(self)
 endfunction

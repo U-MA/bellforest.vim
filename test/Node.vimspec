@@ -7,6 +7,15 @@ Describe Node
     End
   End
 
+  Describe .set_data(list)
+    It set node's data
+      let node = bellforest#Node#new()
+      let data = [ '!@#' ]
+      call node.set_data(data)
+      Assert Equals(node._data, data)
+    End
+  End
+
   Describe .remove_from_parent()
     It is removed from Scene
       let scene = bellforest#Scene#new('NodeTest')
