@@ -5,6 +5,14 @@ Describe Node
       Assert Equals(node._data, [])
       Assert Equals(node._position, [1, 1])
     End
+
+    It create an node with position and data
+      let position = [2, 3]
+      let data = ['+-----+']
+      let node = bellforest#Node#new(position, data)
+      Assert Equals(node._position, position)
+      Assert Equals(node._data, data)
+    End
   End
 
   Describe .set_data(list)
