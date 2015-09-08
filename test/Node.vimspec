@@ -1,4 +1,8 @@
 Describe Node
+  Before each
+    let node = bellforest#Node#new()
+  End
+
   Describe #new(...)
     It create an empty node
       let node = bellforest#Node#new()
@@ -17,7 +21,6 @@ Describe Node
 
   Describe .set_data(list)
     It set node's data
-      let node = bellforest#Node#new()
       let data = [ '!@#' ]
       call node.set_data(data)
       Assert Equals(node._data, data)
@@ -27,18 +30,16 @@ Describe Node
   Describe .remove_from_parent()
     It is removed from Scene
       let scene = bellforest#Scene#new('NodeTest')
-      let node = bellforest#Node#new()
       call scene.add_child(node)
       call node.remove_from_parent()
       Assert Equals(len(scene.childs.data), 0)
     End
 
     It is removed from Node
-      let node1 = bellforest#Node#new()
       let node2 = bellforest#Node#new()
-      call node1.add_child(node2)
+      call node.add_child(node2)
       call node2.remove_from_parent()
-      Assert Equals(len(node1._childs.data), 0)
+      Assert Equals(len(node._childs.data), 0)
     End
   End
 End
