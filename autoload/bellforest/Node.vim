@@ -132,7 +132,7 @@ function! s:Node.erase_rect() abort
 endfunction
 
 function! s:Node.absolute_position() abort
-  let l:p_abs_pos = self.parent.absolute_position()
+  let l:p_abs_pos = self._parent.absolute_position()
   return [l:p_abs_pos[0] + self._position[0]-1,
     \     l:p_abs_pos[1] + self._position[1]-1]
 
