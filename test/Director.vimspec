@@ -1,0 +1,16 @@
+Describe Director
+  Before all
+    let director = bellforest#Director#instance()
+  End
+
+  Describe .print_debug(line, key)
+    It print a debug information specified key at line
+      tabnew 'print_debug'
+      call director.print_debug(1, 'listeners')
+      call director.print_debug(2, 'objects')
+      Assert Match(getline(1), 'listeners: \d\+')
+      Assert Match(getline(2), 'objects: \d\+')
+      bdelete!
+    End
+  End
+End

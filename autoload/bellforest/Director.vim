@@ -52,6 +52,21 @@ function! s:Director.run_with_scene(scene) abort
   bdelete!
 endfunction
 
+function! s:Director.get_info(key) abort
+  if a:key ==# 'listeners'
+    return printf("listeners: %d", self.get_event_dispatcher().listeners.size())
+  elseif a:key ==# 'objects'
+    return printf("objects: %d", 0)
+  else
+    return 'key not found'
+  endif
+endfunction
+
+function! s:Director.print_debug(line, key) abort
+  let l:info = self.get_info(a:key)
+  call setline(a:line, l:info)
+endfunction
+
 function! s:Director.end() abort
   let self.is_end = 1
 
