@@ -8,6 +8,10 @@ function! s:Node.set_data(list) abort
   let self._data = a:list
 endfunction
 
+function! s:Node.set_position(position) abort
+  let self._position = copy(a:position)
+endfunction
+
 function! s:Node.schedule_update() abort
   call bellforest#Scheduler#instance().schedule(self)
 endfunction
