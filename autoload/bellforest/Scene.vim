@@ -5,7 +5,7 @@ function! s:Scene.init() abort
 endfunction
 
 function! s:Scene.add_child(node) abort
-  let a:node.parent = self
+  let a:node._parent = self
   call self.childs.push_back(a:node)
   "call add(self.childs, a:node)
 endfunction

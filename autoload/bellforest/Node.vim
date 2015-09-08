@@ -1,6 +1,4 @@
-let s:Node = { 'position' : [ 1, 1 ], 'width' : 1, 'height' : 1,
-  \            'data' : [], 'childs' : {}, 'parent' : {} }
-let s:Node.childs = bellforest#util#Vector#new()
+let s:Node = {}
 
 function! s:Node.init() abort
   " You may override this function
@@ -19,23 +17,23 @@ function! s:Node.run_action(action) abort
 endfunction
 
 function! s:Node.remove_child(child) abort
-  call self.childs.erase_object(a:child)
+  call self._childs.erase_object(a:child)
 endfunction
 
 function! s:Node.remove_from_parent() abort
-  call self.parent.remove_child(self)
+  call self._parent.remove_child(self)
 endfunction
 
 function! s:Node.count_childs() abort
-  let l:count = self.childs.size()
-  for l:child in self.childs.data
+  let l:count = self._childs.size()
+  for l:child in self._childs.data
     let l:count += l:child.count_childs()
   endfor
   return l:count
 endfunction
 
 function! s:Node.child_init() abort
-  for l:child in self.childs.data
+  for l:child in self._childs.data
     call l:child.init()
     call l:child.child_init()
   endfor
@@ -43,27 +41,27 @@ endfunction
 
 function! s:Node.visit() abort
   call self.draw()
-  for l:child in self.childs.data
+  for l:child in self._childs.data
     call l:child.visit()
   endfor
 endfunction
 
 function! s:Node.draw() abort
-  if type(self.data) == type('')
+  if type(self._data) == type('')
     "TODO
     "call self.draw_char()
-  elseif type(self.data) == type([])
+  elseif type(self._data) == type([])
     call self.draw_rect()
   endif
 endfunction
 
 function! s:Node.rect() abort
-  return bellforest#Rect#new(self.position, self.width, self.height)
+  return bellforest#Rect#new(self._position, self._width, self._height)
 endfunction
 
 function! s:Node.add_child(child) abort
-  let a:child.parent = self
-  call self.childs.push_back(a:child)
+  let a:child._parent = self
+  call self._childs.push_back(a:child)
 endfunction
 
 function! s:Node.draw_rect() abort
@@ -77,7 +75,7 @@ function! s:Node.draw_rect() abort
     let l:cright = float2nr(l:abs_visible_pos[1] + l:visible_rect.width - 1)
 
     let l:lnum = float2nr(self.absolute_position()[0])
-    for l:line in self.data
+    for l:line in self._data
       if l:top <= l:lnum && l:lnum <= l:bottom
         let l:bufline = getline(l:lnum)
         let l:left    = l:cleft == 1 ? '' : l:bufline[: l:cleft-2]
@@ -92,10 +90,10 @@ endfunction
 
 
 function! s:Node.erase() abort
-   if type(self.data) == type('')
+   if type(self._data) == type('')
      "TODO
      "call self.erase_char()
-  elseif type(self.data) == type([])
+  elseif type(self._data) == type([])
     call self.erase_rect()
   endif
 endfunction
@@ -112,7 +110,7 @@ function! s:Node.erase_rect() abort
     let l:cright = float2nr(l:abs_visible_pos[1] + l:visible_rect.width - 1)
 
     let l:lnum = float2nr(self.absolute_position()[0])
-    for l:line in self.data
+    for l:line in self._data
       if l:top <= l:lnum && l:lnum <= l:bottom
         let l:bufline = getline(l:lnum)
         let l:left    = l:cleft == 1 ? '' : l:bufline[: l:cleft-2]
@@ -127,13 +125,13 @@ endfunction
 
 function! s:Node.absolute_position() abort
   let l:p_abs_pos = self.parent.absolute_position()
-  return [l:p_abs_pos[0] + self.position[0]-1,
-    \     l:p_abs_pos[1] + self.position[1]-1]
+  return [l:p_abs_pos[0] + self._position[0]-1,
+    \     l:p_abs_pos[1] + self._position[1]-1]
 
 endfunction
 
 function! s:Node.convert_absolute(position) abort
-  let l:abs_pos = self.parent.convert_absolute(self.position)
+  let l:abs_pos = self._parent.convert_absolute(self._position)
 
   return [l:abs_pos[0] + a:position[0] - 1,
     \     l:abs_pos[1] + a:position[1] - 1]
@@ -156,15 +154,15 @@ function! s:min(x, y) abort
 endfunction
 
 function! s:Node.visible_rect() abort
-  let l:pvisible = self.parent.visible_rect()
+  let l:pvisible = self._parent.visible_rect()
 
-  let l:top    = s:max(l:pvisible.position[0], self.position[0])
-  let l:bottom = s:min(l:pvisible.position[0] + l:pvisible.height - 1, self.position[0] + self.height - 1)
-  let l:left   = s:max(l:pvisible.position[1], self.position[1])
-  let l:right  = s:min(l:pvisible.position[1] + l:pvisible.width - 1, self.position[1] + self.width - 1)
+  let l:top    = s:max(l:pvisible.position[0], self._position[0])
+  let l:bottom = s:min(l:pvisible.position[0] + l:pvisible.height - 1, self._position[0] + self._height - 1)
+  let l:left   = s:max(l:pvisible.position[1], self._position[1])
+  let l:right  = s:min(l:pvisible.position[1] + l:pvisible.width - 1, self._position[1] + self._width - 1)
 
   let l:rect = { 'position' : [ 1, 1 ], 'width' : 1, 'height' : 1 }
-  let l:rect.position = [l:top - self.position[0] + 1, l:left - self.position[1] + 1]
+  let l:rect.position = [l:top - self._position[0] + 1, l:left - self._position[1] + 1]
   let l:rect.width    = s:max(0, l:right - l:left + 1)
   let l:rect.height   = s:max(0, l:bottom - l:top + 1)
   return l:rect
@@ -187,5 +185,7 @@ function! bellforest#Node#new(...) abort
     let l:node._width    = 0
     let l:node._height   = 0
   endif
+  let l:node._parent   = {}
+  let l:node._childs   = bellforest#util#Vector#new()
   return l:node
 endfunction

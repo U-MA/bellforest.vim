@@ -13,11 +13,11 @@ function! s:MoveBy.step(dt) abort
   else
     let l:delta = [ self.dps[0] * a:dt, self.dps[1] * a:dt ]
     if self.target[0] != 0
-      let self.actor.position[0] += l:delta[0]
+      let self.actor._position[0] += l:delta[0]
     endif
 
     if self.target[1] != 0
-      let self.actor.position[1] += l:delta[1]
+      let self.actor._position[1] += l:delta[1]
     endif
   endif
   let self.duration += a:dt
@@ -28,13 +28,13 @@ function! s:MoveBy.is_done() abort
 endfunction
 
 function! s:MoveBy.stop() abort
-  let self.actor.position[0] = float2nr(self.actor.position[0])
-  let self.actor.position[1] = float2nr(self.actor.position[1])
+  let self.actor._position[0] = float2nr(self.actor._position[0])
+  let self.actor._position[1] = float2nr(self.actor._position[1])
 endfunction
 
 function! s:MoveBy.delta(dt) abort
-  return [ (a:dt / (self.second - self.duration)) * ((self.start_position[0] + self.target[0] - 1) - self.actor.position[0]),
-    \      (a:dt / (self.second - self.duration)) * ((self.start_position[1] + self.target[1] - 1) - self.actor.position[1]) ]
+  return [ (a:dt / (self.second - self.duration)) * ((self.start_position[0] + self.target[0] - 1) - self.actor._position[0]),
+    \      (a:dt / (self.second - self.duration)) * ((self.start_position[1] + self.target[1] - 1) - self.actor._position[1]) ]
 endfunction
 
 function! bellforest#action#MoveBy#new(second, delta_position) abort

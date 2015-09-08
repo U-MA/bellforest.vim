@@ -13,7 +13,7 @@ function! s:Sequence.step(dt) abort
   let l:current_action = self.current_action()
   if empty(l:current_action.actor)
     let l:current_action.actor = self.actor
-    let l:current_action.start_position = copy(self.actor.position)
+    let l:current_action.start_position = copy(self.actor._position)
   endif
 
   call l:current_action.step(a:dt)

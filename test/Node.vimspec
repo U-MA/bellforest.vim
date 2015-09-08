@@ -21,7 +21,7 @@ Describe Node
       let node2 = bellforest#Node#new([1, 1], ['#'])
       call node1.add_child(node2)
       call node2.remove_from_parent()
-      Assert Equals(len(node1.childs.data), 0)
+      Assert Equals(len(node1._childs.data), 0)
     End
   End
 End
