@@ -31,7 +31,7 @@ function! s:Director.run_with_scene(scene) abort
     let l:dt = s:reltime2msec(l:start)
     let self.pressed_key = getchar(0)
 
-    for l:child in self.scene.childs.data
+    for l:child in self.scene.childs.list()
       call l:child.erase()
     endfor
 
@@ -85,7 +85,7 @@ function! s:Director.get_event_dispatcher() abort
 endfunction
 
 function! s:Director.replace_scene(scene) abort
-  for l:child in self.scene.childs.data
+  for l:child in self.scene.childs.list()
     call l:child.erase()
   endfor
   call self.scene.cleanup()

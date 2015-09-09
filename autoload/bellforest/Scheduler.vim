@@ -11,7 +11,7 @@ function! s:Scheduler.unschedule(node) abort
 endfunction
 
 function! s:Scheduler.update(dt) abort
-  for l:node in self.nodes.data
+  for l:node in self.nodes.list()
     call l:node.update(a:dt)
   endfor
 endfunction
