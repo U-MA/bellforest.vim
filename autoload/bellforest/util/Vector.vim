@@ -29,6 +29,10 @@ function! s:vector.erase_object(obj) abort
   endfor
 endfunction
 
+function! s:vector.list() abort
+  return copy(self.data)
+endfunction
+
 function! bellforest#util#Vector#new() abort
   return deepcopy(s:vector)
 endfunction

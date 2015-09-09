@@ -62,4 +62,14 @@ Describe Vector
       Assert Equals(v.size(), 0)
     End
   End
+
+  Describe .list()
+    It returns vector._data as list
+      let expect = range(3)
+      for i in expect
+        call v.push_back(i)
+      endfor
+      Assert Equals(v.list(), expect)
+    End
+  End
 End
