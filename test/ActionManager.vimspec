@@ -4,7 +4,7 @@ Describe ActionManager
   End
 
   Before each
-    let action_manager.clear()
+    call action_manager.clear()
   End
 
   Describe .add_action(actor, action)
