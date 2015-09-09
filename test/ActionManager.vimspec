@@ -3,6 +3,10 @@ Describe ActionManager
     let action_manager = bellforest#ActionManager#instance()
   End
 
+  Before each
+    let action_manager.clear()
+  End
+
   Describe .add_action(actor, action)
     It adds an action with an actor
       let action = bellforest#action#MoveBy#new(1, [1, 1])

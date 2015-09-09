@@ -7,7 +7,9 @@ function! s:ActionManager.add_action(actor, action) abort
 endfunction
 
 function! s:ActionManager.clear() abort
-  unlet! self._elements[:len(self._elements)-1]
+  if len(self._elements)
+    unlet! self._elements[:len(self._elements)-1]
+  endif
 endfunction
 
 function! s:ActionManager.update(dt) abort
