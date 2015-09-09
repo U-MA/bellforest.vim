@@ -11,6 +11,13 @@ Describe Director
     " fall through
   endfunction
 
+  Describe .set_fps(fps)
+    It sets frame per second
+      call director.set_fps(30)
+      Assert Equals(director._fps, 30)
+    End
+  End
+
   Describe .print_debug(line, key)
     It print a debug information specified key at line
       tabnew 'print_debug'

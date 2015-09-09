@@ -1,7 +1,7 @@
-let s:Director = { 'fps' : 60, 'is_end' : 0, 'pressed_key' : 0 }
+let s:Director = { '_fps' : 60, '_is_end' : 0, '_pressed_key' : 0 }
 
 function! s:Director.set_fps(fps) abort
-  let self.fps = a:fps
+  let self._fps = a:fps
 endfunction
 
 function! s:Director.set_filetype(filename) abort
@@ -20,16 +20,16 @@ function! s:Director.run_with_scene(scene) abort
     execute 'setlocal filetype=' . self.filename
   endif
 
-  let self.is_end = 0
+  let self._is_end = 0
 
   let self.scene = a:scene
   call self.scene.init()
   call self.scene.child_init()
 
   let l:start = reltime()
-  while !self.is_end
+  while !self._is_end
     let l:dt = s:reltime2msec(l:start)
-    let self.pressed_key = getchar(0)
+    let self._pressed_key = getchar(0)
 
     for l:child in self.scene.childs.list()
       call l:child.erase()
@@ -46,7 +46,7 @@ function! s:Director.run_with_scene(scene) abort
 
     redraw
     let l:start = reltime()
-    execute 'sleep ' float2nr(s:fps2msec(self.fps)) 'm'
+    execute 'sleep ' float2nr(s:fps2msec(self._fps)) 'm'
   endwhile
 
   bdelete!
@@ -75,7 +75,7 @@ function! s:Director.print_debug(line, key) abort
 endfunction
 
 function! s:Director.end() abort
-  let self.is_end = 1
+  let self._is_end = 1
 
   call self.cleanup()
 endfunction

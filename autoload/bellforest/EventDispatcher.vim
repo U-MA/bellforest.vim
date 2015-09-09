@@ -25,7 +25,7 @@ function! s:EventDispatcher.remove_all_events() abort
 endfunction
 
 function! s:EventDispatcher.dispatch() abort
-  let l:key = bellforest#Director#instance().pressed_key
+  let l:key = bellforest#Director#instance()._pressed_key
   for l:listener in self.listeners.list()
     if type(l:listener.press) == type(function('tr'))
       call l:listener.press(nr2char(l:key))
