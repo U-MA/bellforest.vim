@@ -31,7 +31,7 @@ function! s:Vector.erase_object(obj) abort
 endfunction
 
 function! s:Vector.list() abort
-  return copy(self._data)
+  return self._data
 endfunction
 
 function! bellforest#util#Vector#new() abort
