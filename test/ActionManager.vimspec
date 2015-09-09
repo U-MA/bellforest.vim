@@ -12,4 +12,15 @@ Describe ActionManager
       Assert Equals(len(action_manager._elements), 1)
     End
   End
+
+  Describe .clear()
+    It clear actions which ActionManager has
+      let action = bellforest#action#MoveBy#new(1, [1, 1])
+      let node   = bellforest#Node#new()
+      call action_manager.add_action(node, action)
+      call action_manager.clear()
+
+      Assert Equals(len(action_manager._elements), 0)
+    End
+  End
 End

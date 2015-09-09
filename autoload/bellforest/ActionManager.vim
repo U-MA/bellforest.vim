@@ -6,6 +6,10 @@ function! s:ActionManager.add_action(actor, action) abort
   call add(self._elements, a:action)
 endfunction
 
+function! s:ActionManager.clear() abort
+  unlet! self._elements[:len(self._elements)-1]
+endfunction
+
 function! s:ActionManager.update(dt) abort
   let l:will_remove = []
   for l:i in range(len(self._elements))
