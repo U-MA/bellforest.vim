@@ -1,38 +1,41 @@
-let s:vector = { 'data' : [] }
-function! s:vector.push_back(x) abort
-  call add(self.data, a:x)
+let s:Vector = {}
+
+function! s:Vector.push_back(x) abort
+  call add(self._data, a:x)
 endfunction
 
-function! s:vector.pop_back() abort
-  let l:ret = self.data[len(self.data)-1]
-  call remove(self.data, len(self.data)-1)
+function! s:Vector.pop_back() abort
+  let l:ret = self._data[len(self._data)-1]
+  call remove(self._data, len(self._data)-1)
   return l:ret
 endfunction
 
-function! s:vector.get(idx) abort
-  return self.data[a:idx]
+function! s:Vector.get(idx) abort
+  return self._data[a:idx]
 endfunction
 
-function! s:vector.size() abort
-  return len(self.data)
+function! s:Vector.size() abort
+  return len(self._data)
 endfunction
 
-function! s:vector.empty() abort
-  let self.data = []
+function! s:Vector.empty() abort
+  let self._data = []
 endfunction
 
-function! s:vector.erase_object(obj) abort
+function! s:Vector.erase_object(obj) abort
   for l:i in range(self.size())
-    if self.data[l:i] is# a:obj
-      return remove(self.data, l:i)
+    if self._data[l:i] is# a:obj
+      return remove(self._data, l:i)
     endif
   endfor
 endfunction
 
-function! s:vector.list() abort
-  return copy(self.data)
+function! s:Vector.list() abort
+  return copy(self._data)
 endfunction
 
 function! bellforest#util#Vector#new() abort
-  return deepcopy(s:vector)
+  let l:vector = deepcopy(s:Vector)
+  let l:vector._data = []
+  return l:vector
 endfunction

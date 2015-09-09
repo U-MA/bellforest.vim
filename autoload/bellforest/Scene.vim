@@ -27,14 +27,14 @@ function! s:Scene.cleanup() abort
 endfunction
 
 function! s:Scene.visit() abort
-  for l:child in self.childs.data
+  for l:child in self.childs.list()
     call l:child.visit()
   endfor
 endfunction
 
 function! s:Scene.count_childs() abort
   let l:count = 0
-  for l:child in self.childs.data
+  for l:child in self.childs.list()
     let l:count += l:child.count_childs() + 1
   endfor
   return l:count
@@ -71,7 +71,7 @@ function! s:Scene.get_event_dispatcher() abort
 endfunction
 
 function! s:Scene.child_init() abort
-  for l:child in self.childs.data
+  for l:child in self.childs.list()
     call l:child.init()
     call l:child.child_init()
   endfor

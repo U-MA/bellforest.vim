@@ -13,7 +13,7 @@ function! s:EventDispatcher.remove_event_listener(listener) abort
 endfunction
 
 function! s:EventDispatcher.remove_event_with_target(node) abort
-  for l:listener in self.listeners.data
+  for l:listener in self.listeners.list()
     if has_key(l:listener, 'target') && (l:listener.target is a:node)
       call self.remove_event_listener(l:listener)
     endif
@@ -26,7 +26,7 @@ endfunction
 
 function! s:EventDispatcher.dispatch() abort
   let l:key = bellforest#Director#instance().pressed_key
-  for l:listener in self.listeners.data
+  for l:listener in self.listeners.list()
     if type(l:listener.press) == type(function('tr'))
       call l:listener.press(nr2char(l:key))
     else

@@ -2,7 +2,7 @@ let s:Sequence = { 'now' : 0 }
 let s:Sequence.actions = bellforest#util#Vector#new()
 
 function! s:Sequence.size() abort
-  return len(self.actions.data)
+  return self.actions.size()
 endfunction
 
 function! s:Sequence.current_action() abort
