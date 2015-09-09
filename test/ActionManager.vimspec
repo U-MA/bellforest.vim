@@ -1,0 +1,15 @@
+Describe ActionManager
+  Before all
+    let action_manager = bellforest#ActionManager#instance()
+  End
+
+  Describe .add_action(actor, action)
+    It adds an action with an actor
+      let action = bellforest#action#MoveBy#new(1, [1, 1])
+      let node   = bellforest#Node#new()
+      call action_manager.add_action(node, action)
+
+      Assert Equals(len(action_manager._elements), 1)
+    End
+  End
+End
