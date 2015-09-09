@@ -3,10 +3,10 @@ Describe Rect
     It set up a rect
       let l:rect = bellforest#Rect#new([1, 2], 3, 4)
 
-      Assert Equals(l:rect.position[0], 1)
-      Assert Equals(l:rect.position[1], 2)
-      Assert Equals(l:rect.width,       3)
-      Assert Equals(l:rect.height,      4)
+      Assert Equals(l:rect._position[0], 1)
+      Assert Equals(l:rect._position[1], 2)
+      Assert Equals(l:rect._width,       3)
+      Assert Equals(l:rect._height,      4)
     End
   End
 
