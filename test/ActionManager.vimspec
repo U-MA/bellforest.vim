@@ -15,6 +15,14 @@ Describe ActionManager
 
       Assert Equals(len(action_manager._elements), 1)
     End
+
+    It sets an actor to an action
+      let action = bellforest#action#MoveBy#new(1, [1, 1])
+      let node   = bellforest#Node#new()
+      call action_manager.add_action(node, action)
+
+      Assert Equals(action.actor, node)
+    End
   End
 
   Describe .clear()
