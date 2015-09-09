@@ -34,14 +34,14 @@ endfunction
 
 function! s:Node.count_childs() abort
   let l:count = self._childs.size()
-  for l:child in self._childs.data
+  for l:child in self._childs.list()
     let l:count += l:child.count_childs()
   endfor
   return l:count
 endfunction
 
 function! s:Node.child_init() abort
-  for l:child in self._childs.data
+  for l:child in self._childs.list()
     call l:child.init()
     call l:child.child_init()
   endfor
@@ -49,7 +49,7 @@ endfunction
 
 function! s:Node.visit() abort
   call self.draw()
-  for l:child in self._childs.data
+  for l:child in self._childs.list()
     call l:child.visit()
   endfor
 endfunction

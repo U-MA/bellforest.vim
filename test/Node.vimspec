@@ -44,14 +44,14 @@ Describe Node
       let scene = bellforest#Scene#new('NodeTest')
       call scene.add_child(node)
       call node.remove_from_parent()
-      Assert Equals(len(scene.childs.data), 0)
+      Assert Equals(len(scene.childs.list()), 0)
     End
 
     It is removed from Node
       let node2 = bellforest#Node#new()
       call node.add_child(node2)
       call node2.remove_from_parent()
-      Assert Equals(len(node._childs.data), 0)
+      Assert Equals(len(node._childs.list()), 0)
     End
   End
 End
