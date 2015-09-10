@@ -4,6 +4,14 @@ function! s:Scene.init() abort
   " You may override this function
 endfunction
 
+function! s:Scene.height() abort
+  return self._height
+endfunction
+
+function! s:Scene.width() abort
+  return self._width
+endfunction
+
 function! s:Scene.add_child(node) abort
   let a:node._parent = self
   call self._childs.push_back(a:node)

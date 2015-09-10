@@ -8,6 +8,20 @@ Describe Scene
     End
   End
 
+  Describe .height()
+    It returns a height of Scene
+      let scene = bellforest#Scene#new('name', 30, 40)
+      Assert Equals(scene.height(), 30)
+    End
+  End
+
+  Describe .width()
+    It returns a width of Scene
+      let scene = bellforest#Scene#new('name', 30, 40)
+      Assert Equals(scene.width(), 40)
+    End
+  End
+
   Describe .cleanup()
     It remove some events bound to this scene from EventDispatcher
       let scene = bellforest#Scene#new('name')
