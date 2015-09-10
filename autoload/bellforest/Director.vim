@@ -5,7 +5,7 @@ function! s:Director.set_fps(fps) abort
 endfunction
 
 function! s:Director.set_filetype(filename) abort
-  let self.filename = a:filename
+  let self._filename = a:filename
 endfunction
 
 function! s:Director.run_with_scene(scene) abort
@@ -16,8 +16,8 @@ function! s:Director.run_with_scene(scene) abort
     call self.init()
   endif
 
-  if has_key(self, 'filename')
-    execute 'setlocal filetype=' . self.filename
+  if has_key(self, '_filename')
+    execute 'setlocal filetype=' . self._filename
   endif
 
   let self._is_end = 0
