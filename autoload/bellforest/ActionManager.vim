@@ -1,8 +1,8 @@
 let s:ActionManager = { '_elements' : [] }
 
 function! s:ActionManager.add_action(actor, action) abort
-  let a:action.actor = a:actor
-  let a:action.start_position = copy(a:actor._position)
+  let a:action._actor = a:actor
+  let a:action._start_position = copy(a:actor._position)
   call add(self._elements, a:action)
 endfunction
 

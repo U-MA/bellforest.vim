@@ -1,27 +1,27 @@
 Describe ActionManager
   Before all
     let action_manager = bellforest#ActionManager#instance()
+
+    let stub_action = {'_actor' : {}}
+    let stub_node   = {'_position' : [1, 1]}
   End
 
   Before each
     call action_manager.clear()
   End
 
+
   Describe .add_action(actor, action)
     It adds an action with an actor
-      let action = bellforest#action#MoveBy#new(1, [1, 1])
-      let node   = bellforest#Node#new()
-      call action_manager.add_action(node, action)
+      call action_manager.add_action(stub_node, stub_action)
 
       Assert Equals(len(action_manager._elements), 1)
     End
 
     It sets an actor to an action
-      let action = bellforest#action#MoveBy#new(1, [1, 1])
-      let node   = bellforest#Node#new()
-      call action_manager.add_action(node, action)
+      call action_manager.add_action(stub_node, stub_action)
 
-      Assert Equals(action.actor, node)
+      Assert Equals(stub_action._actor, stub_node)
     End
   End
 

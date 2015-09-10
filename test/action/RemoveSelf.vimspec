@@ -9,7 +9,7 @@ Describe RemoveSelf
 
       call bellforest#ActionManager#instance().update(1)
 
-      Assert Equals(scene.childs.size(), 0)
+      Assert Equals(scene._childs.size(), 0)
     End
   End
 End

@@ -1,4 +1,4 @@
-let s:Scene = { 'name' : '', 'width' : 0, 'height' : 0, 'childs' : [] }
+let s:Scene = { '_name' : '', '_width' : 0, '_height' : 0, '_childs' : [] }
 
 function! s:Scene.init() abort
   " You may override this function
@@ -6,12 +6,12 @@ endfunction
 
 function! s:Scene.add_child(node) abort
   let a:node._parent = self
-  call self.childs.push_back(a:node)
+  call self._childs.push_back(a:node)
   "call add(self.childs, a:node)
 endfunction
 
 function! s:Scene.remove_child(child) abort
-  call self.childs.erase_object(a:child)
+  call self._childs.erase_object(a:child)
 endfunction
 
 function! s:Scene.schedule_update() abort
@@ -27,22 +27,22 @@ function! s:Scene.cleanup() abort
 endfunction
 
 function! s:Scene.visit() abort
-  for l:child in self.childs.list()
+  for l:child in self._childs.list()
     call l:child.visit()
   endfor
 endfunction
 
 function! s:Scene.count_childs() abort
   let l:count = 0
-  for l:child in self.childs.list()
+  for l:child in self._childs.list()
     let l:count += l:child.count_childs() + 1
   endfor
   return l:count
 endfunction
 
 function! s:Scene.draw_space(height, width) abort
-  let self.height = a:height
-  let self.width  = a:width
+  let self._height = a:height
+  let self._width  = a:width
 
   let l:white_space = repeat(' ', a:width)
   for l:i in range(1, a:height)
@@ -53,8 +53,8 @@ endfunction
 function! s:Scene.visible_rect() abort
   let l:rect = {}
   let l:rect.position = [ 1, 1 ]
-  let l:rect.width    = self.width
-  let l:rect.height   = self.height
+  let l:rect.width    = self._width
+  let l:rect.height   = self._height
   return l:rect
 endfunction
 
@@ -71,7 +71,7 @@ function! s:Scene.get_event_dispatcher() abort
 endfunction
 
 function! s:Scene.child_init() abort
-  for l:child in self.childs.list()
+  for l:child in self._childs.list()
     call l:child.init()
     call l:child.child_init()
   endfor
@@ -79,11 +79,11 @@ endfunction
 
 function! bellforest#Scene#new(name, ...) abort
   let l:scene = deepcopy(s:Scene)
-  let l:scene.name = a:name
+  let l:scene._name = a:name
   if a:0 > 0
-    let l:scene.height = a:000[0]
-    let l:scene.width  = a:000[1]
+    let l:scene._height = a:000[0]
+    let l:scene._width  = a:000[1]
   endif
-  let l:scene.childs = bellforest#util#Vector#new()
+  let l:scene._childs = bellforest#util#Vector#new()
   return l:scene
 endfunction

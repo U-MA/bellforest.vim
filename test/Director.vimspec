@@ -50,7 +50,7 @@ Describe Director
     let scene = bellforest#Scene#new('xxx')
     call scene.add_child(bellforest#Node#new([1, 1], ['#']))
     call scene.add_child(bellforest#Node#new([2, 2], ['#']))
-    let director.scene = scene
+    let director._scene = scene
     call director.print_debug(1, 'objects')
     Assert Match(getline(1), 'objects: 2')
     bdelete!

@@ -1,7 +1,7 @@
-let s:RemoveSelf = { 'actor' : {} }
+let s:RemoveSelf = { '_actor' : {} }
 
 function! s:RemoveSelf.step(dt) abort
-  call self.actor.remove_from_parent()
+  call self._actor.remove_from_parent()
 endfunction
 
 function! s:RemoveSelf.is_done() abort

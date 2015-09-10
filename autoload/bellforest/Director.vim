@@ -9,9 +9,9 @@ function! s:Director.set_filetype(filename) abort
 endfunction
 
 function! s:Director.run_with_scene(scene) abort
-  execute 'tabnew' a:scene.name
+  execute 'tabnew' a:scene._name
 
-  call a:scene.draw_space(a:scene.height, a:scene.width)
+  call a:scene.draw_space(a:scene._height, a:scene._width)
   if has_key(self, 'init')
     call self.init()
   endif
@@ -22,16 +22,16 @@ function! s:Director.run_with_scene(scene) abort
 
   let self._is_end = 0
 
-  let self.scene = a:scene
-  call self.scene.init()
-  call self.scene.child_init()
+  let self._scene = a:scene
+  call self._scene.init()
+  call self._scene.child_init()
 
   let l:start = reltime()
   while !self._is_end
     let l:dt = s:reltime2msec(l:start)
     let self._pressed_key = getchar(0)
 
-    for l:child in self.scene.childs.list()
+    for l:child in self._scene._childs.list()
       call l:child.erase()
     endfor
 
@@ -42,7 +42,7 @@ function! s:Director.run_with_scene(scene) abort
     call bellforest#Scheduler#instance().update(l:dt / 1000.0)
 
     " draw a:scene
-    call self.scene.visit()
+    call self._scene.visit()
 
     redraw
     let l:start = reltime()
@@ -53,15 +53,15 @@ function! s:Director.run_with_scene(scene) abort
 endfunction
 
 function! s:Director.count_childs() abort
-  if !has_key(self, 'scene')
+  if !has_key(self, '_scene')
     return 0
   endif
-  return self.scene.count_childs()
+  return self._scene.count_childs()
 endfunction
 
 function! s:Director.get_info(key) abort
   if a:key ==# 'listeners'
-    return printf("listeners: %d", self.get_event_dispatcher().listeners.size())
+    return printf("listeners: %d", self.get_event_dispatcher()._listeners.size())
   elseif a:key ==# 'objects'
     return printf("objects: %d", self.count_childs())
   else
@@ -85,12 +85,12 @@ function! s:Director.get_event_dispatcher() abort
 endfunction
 
 function! s:Director.replace_scene(scene) abort
-  for l:child in self.scene.childs.list()
+  for l:child in self._scene.childs.list()
     call l:child.erase()
   endfor
-  call self.scene.cleanup()
+  call self._scene.cleanup()
 
-  let self.scene = a:scene
+  let self._scene = a:scene
   call a:scene.init()
   call a:scene.child_init()
 endfunction

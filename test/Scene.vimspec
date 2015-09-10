@@ -2,9 +2,9 @@ Describe Scene
   Describe #new()
     It set name, height and width
       let scene = bellforest#Scene#new('name', 5, 4)
-      Assert Equals(scene.name, 'name')
-      Assert Equals(scene.width,  4)
-      Assert Equals(scene.height, 5)
+      Assert Equals(scene._name, 'name')
+      Assert Equals(scene._width,  4)
+      Assert Equals(scene._height, 5)
     End
   End
 
@@ -20,7 +20,7 @@ Describe Scene
       let dispatcher.add_event_listener(listener, scene)
       call scene.cleanup()
 
-      Assert Equals(dispatcher.listeners.size(), 0)
+      Assert Equals(dispatcher._listeners.size(), 0)
     End
   End
 End
