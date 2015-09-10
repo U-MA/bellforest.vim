@@ -1,24 +1,10 @@
 Describe Scene
   Describe #new()
     It set name, height and width
-      let scene = bellforest#Scene#new('name', 5, 4)
+      let scene = bellforest#Scene#new('name', 30, 40)
       Assert Equals(scene._name, 'name')
-      Assert Equals(scene._width,  4)
-      Assert Equals(scene._height, 5)
-    End
-  End
-
-  Describe .height()
-    It returns a height of Scene
-      let scene = bellforest#Scene#new('name', 30, 40)
       Assert Equals(scene.height(), 30)
-    End
-  End
-
-  Describe .width()
-    It returns a width of Scene
-      let scene = bellforest#Scene#new('name', 30, 40)
-      Assert Equals(scene.width(), 40)
+      Assert Equals(scene.width(),  40)
     End
   End
 
