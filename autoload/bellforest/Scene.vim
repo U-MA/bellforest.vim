@@ -4,6 +4,10 @@ function! s:Scene.init() abort
   " You may override this function
 endfunction
 
+function! s:Scene.name() abort
+  return self._name
+endfunction
+
 function! s:Scene.height() abort
   return self._height
 endfunction

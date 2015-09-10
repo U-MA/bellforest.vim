@@ -2,7 +2,7 @@ Describe Scene
   Describe #new()
     It set name, height and width
       let scene = bellforest#Scene#new('name', 30, 40)
-      Assert Equals(scene._name, 'name')
+      Assert Equals(scene.name(), 'name')
       Assert Equals(scene.height(), 30)
       Assert Equals(scene.width(),  40)
     End
