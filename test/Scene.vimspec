@@ -8,6 +8,17 @@ Describe Scene
     End
   End
 
+  Describe .add_child()
+    It adds a child
+      let scene = bellforest#Scene#new('name')
+      Assert Equals(scene._childs.size(), 0)
+
+      let node = bellforest#Node#new()
+      call scene.add_child(node)
+      Assert Equals(scene._childs.size(), 1)
+    End
+  End
+
   Describe .cleanup()
     It remove some events bound to this scene from EventDispatcher
       let scene = bellforest#Scene#new('name')
